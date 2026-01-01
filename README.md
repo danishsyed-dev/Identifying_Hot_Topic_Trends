@@ -151,7 +151,8 @@ This project is for educational purposes.
 
 ## 📧 Contact
 
-Your Name - your.email@example.com
+Your Name - SYED DANISH ALI
+Email - knightdanish@outlook.com
 
 Project Link: [https://github.com/danishsyed-dev/Identifying_Hot_Topic_Trends](https://github.com/danishsyed-dev/Identifying_Hot_Topic_Trends)
 
