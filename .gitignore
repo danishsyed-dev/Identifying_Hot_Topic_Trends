@@ -121,7 +121,8 @@ Thumbs.db
 *.csv
 *.xls
 *.xlsx
-Labeled_Data.csv
+# Allow sample dataset
+!Datasets.csv
 media/
 Template/media/
 
