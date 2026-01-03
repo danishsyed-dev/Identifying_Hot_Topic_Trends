@@ -54,12 +54,28 @@ This project implements a system for analyzing text data and predicting whether 
 
 ## 🚀 Installation & Setup
 
+### TL;DR - Quick Start (For Experienced Users)
+```bash
+git clone https://github.com/danishsyed-dev/Identifying_Hot_Topic_Trends.git
+cd Identifying_Hot_Topic_Trends
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+# Open http://127.0.0.1:8000/ in your browser
+```
+
 ### Prerequisites
 - Python 3.10 or higher (tested with Python 3.12)
 - pip (Python package manager)
 - Git
 
-### Quick Start Guide
+### Detailed Setup Guide
+
+#### Step 0: Verify Setup (Optional but Recommended)
+```bash
+python setup_check.py
+```
+This will check if all dependencies are installed and the project is properly configured.
 
 #### Step 1: Clone the Repository
 ```bash
@@ -97,7 +113,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-**Alternative for Windows:** Double-click `START_SERVER.bat` (may require administrator privileges)
+**Alternative for Windows:** Double-click `START_SERVER.bat` (no admin privileges required)
 
 **Alternative method:** Use the provided run script:
 ```bash

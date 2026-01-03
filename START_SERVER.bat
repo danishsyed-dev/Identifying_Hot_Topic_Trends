@@ -1,20 +1,47 @@
 @echo off
-echo Setting up project shortcut...
+echo ============================================================
+echo   Identifying Hot Topic Trends - Starting Server
+echo ============================================================
+echo.
 
-REM Create a junction point to avoid special characters in path
-if not exist "C:\HotTopicProject" (
-    mklink /J "C:\HotTopicProject" "%~dp0"
-    echo Created shortcut at C:\HotTopicProject
-) else (
-    echo Shortcut already exists at C:\HotTopicProject
+REM Check if Python is available
+python --version >nul 2>&1
+if errorlevel 1 (
+    echo Error: Python is not installed or not in PATH
+    echo Please install Python 3.10 or higher from https://www.python.org/
+    pause
+    exit /b 1
 )
 
-cd /d "C:\HotTopicProject"
+echo [1/3] Checking Python installation...
+python --version
 echo.
-echo Current directory: %CD%
+
+echo [2/3] Checking if dependencies are installed...
+python -c "import django" >nul 2>&1
+if errorlevel 1 (
+    echo Error: Django is not installed!
+    echo Installing dependencies...
+    pip install -r requirements.txt
+    if errorlevel 1 (
+        echo Failed to install dependencies.
+        pause
+        exit /b 1
+    )
+)
+echo Dependencies OK!
 echo.
-echo Starting Django server...
-echo Open http://127.0.0.1:8000/ in your browser
+
+echo [3/3] Starting Django server...
+echo.
+echo Open your browser and navigate to:
+echo     http://127.0.0.1:8000/
+echo.
+echo Admin credentials:
+echo     Username: Admin
+echo     Password: Admin
+echo.
+echo Press Ctrl+C to stop the server
 echo.
 
 python manage.py runserver 127.0.0.1:8000
