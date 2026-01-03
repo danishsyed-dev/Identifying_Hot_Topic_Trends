@@ -23,7 +23,7 @@ This project implements a system for analyzing text data and predicting whether 
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Django 6.0, Python 3.13
+- **Backend:** Django 6.0, Python 3.12+
 - **Database:** SQLite3
 - **ML Libraries:** Scikit-learn, Gensim (Word2Vec)
 - **Frontend:** HTML, CSS, Bootstrap
@@ -34,21 +34,27 @@ This project implements a system for analyzing text data and predicting whether 
 ```
 .
 ├── identifying_hot_topic_trends/    # Django settings
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
+│   ├── settings.py                  # Main configuration file
+│   ├── urls.py                      # URL routing
+│   └── wsgi.py                      # WSGI configuration
 ├── Remote_User/                     # User app
-│   ├── models.py
-│   └── views.py
+│   ├── models.py                    # Database models
+│   ├── views.py                     # User views and prediction logic
+│   └── migrations/                  # Database migrations
 ├── Service_Provider/                # Admin app
-│   ├── models.py
-│   └── views.py
+│   ├── models.py                    # Admin models
+│   ├── views.py                     # Admin views and ML training
+│   └── migrations/                  # Database migrations
 ├── Template/
 │   ├── htmls/                       # HTML templates
 │   └── images/                      # Static files
+├── Datasets.csv                     # Sample training dataset (98 examples)
 ├── manage.py                        # Django entry point
+├── setup_check.py                   # Setup validation script
 ├── START_SERVER.bat                 # Windows quick start script
+├── run_server.py                    # Alternative server startup script
 ├── requirements.txt                 # Project dependencies
+├── USAGE_GUIDE.md                   # Detailed usage instructions
 └── .gitignore                       # Git ignore file
 ```
 
@@ -122,6 +128,8 @@ python run_server.py
 
 #### Step 6: Access the Application
 Open your browser and navigate to: **`http://127.0.0.1:8000/`**
+
+**📖 First time using the app?** Check out the [Usage Guide](USAGE_GUIDE.md) for detailed instructions.
 
 ## 👥 User Types & Default Credentials
 
