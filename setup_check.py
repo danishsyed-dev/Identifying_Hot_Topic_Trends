@@ -69,7 +69,11 @@ def check_dataset():
         # Try to load and validate the dataset
         try:
             import pandas as pd
-            data = pd.read_csv('Datasets.csv', encoding='latin-1')
+            # Try UTF-8 first, fallback to latin-1
+            try:
+                data = pd.read_csv('Datasets.csv', encoding='utf-8')
+            except UnicodeDecodeError:
+                data = pd.read_csv('Datasets.csv', encoding='latin-1')
             has_columns = 'Description' in data.columns and 'Label' in data.columns
             print_status(f"Dataset has correct structure ({len(data)} samples)", has_columns)
             if has_columns:

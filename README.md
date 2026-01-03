@@ -23,7 +23,7 @@ This project implements a system for analyzing text data and predicting whether 
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Django 6.0, Python 3.12+
+- **Backend:** Django 6.0, Python 3.10+
 - **Database:** SQLite3
 - **ML Libraries:** Scikit-learn, Gensim (Word2Vec)
 - **Frontend:** HTML, CSS, Bootstrap

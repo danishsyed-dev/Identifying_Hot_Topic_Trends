@@ -18,9 +18,9 @@ python --version
 echo.
 
 echo [2/3] Checking if dependencies are installed...
-python -c "import django" >nul 2>&1
+python -c "import django; ver = tuple(map(int, django.get_version().split('.')[:2])); assert ver >= (6, 0), 'Django 6.0 or higher required'" >nul 2>&1
 if errorlevel 1 (
-    echo Error: Django is not installed!
+    echo Error: Django 6.0+ is not installed!
     echo Installing dependencies...
     pip install -r requirements.txt
     if errorlevel 1 (
