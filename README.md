@@ -55,59 +55,77 @@ This project implements a system for analyzing text data and predicting whether 
 ## 🚀 Installation & Setup
 
 ### Prerequisites
-- Python 3.10 or higher
+- Python 3.10 or higher (tested with Python 3.12)
 - pip (Python package manager)
+- Git
 
-### Step 1: Clone the Repository
+### Quick Start Guide
+
+#### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/danishsyed-dev/Identifying_Hot_Topic_Trends.git
 cd Identifying_Hot_Topic_Trends
 ```
 
-### Step 2: Create Virtual Environment (Recommended)
+#### Step 2: Create Virtual Environment (Recommended)
 ```bash
+# Create virtual environment
 python -m venv venv
-# Windows
+
+# Activate on Windows
 venv\Scripts\activate
-# Linux/Mac
+
+# Activate on Linux/Mac
 source venv/bin/activate
 ```
 
-### Step 3: Install Dependencies
+#### Step 3: Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 4: Run Migrations
+#### Step 4: Initialize Database
 ```bash
-python manage.py makemigrations
+# Run database migrations
 python manage.py migrate
 ```
 
-### Step 5: Start the Server
+**Note:** The `makemigrations` command is not needed as migrations are already included.
+
+#### Step 5: Start the Server
 ```bash
 python manage.py runserver
 ```
 
-Or on Windows, simply double-click `START_SERVER.bat`
+**Alternative for Windows:** Double-click `START_SERVER.bat` (may require administrator privileges)
 
-### Step 6: Access the Application
-Open your browser and go to: `http://127.0.0.1:8000/`
+**Alternative method:** Use the provided run script:
+```bash
+python run_server.py
+```
 
-## 👥 User Types
+#### Step 6: Access the Application
+Open your browser and navigate to: **`http://127.0.0.1:8000/`**
+
+## 👥 User Types & Default Credentials
 
 ### Remote User
-- Register and login
-- Predict hot topic trends by entering text data
-- View profile
+- **Registration Required:** Create an account to access user features
+- Features:
+  - Register and login
+  - Predict hot topic trends by entering text data
+  - View profile
 
 ### Service Provider (Admin)
-- Login: `Admin` / `Admin`
-- Train and test ML models
-- View accuracy charts (Bar, Line)
-- View all predictions and ratios
-- Download predicted datasets
-- Manage remote users
+- **Default Login Credentials:**
+  - Username: `Admin`
+  - Password: `Admin`
+- Features:
+  - Train and test ML models
+  - View accuracy charts (Bar, Line)
+  - View all predictions and ratios
+  - Download predicted datasets
+  - Manage remote users
 
 ## 📊 Features
 
@@ -117,6 +135,31 @@ Open your browser and go to: `http://127.0.0.1:8000/`
 4. **Accuracy Visualization** - View model performance in charts
 5. **Data Export** - Download predictions as Excel files
 6. **Prediction Analytics** - View ratio of Hot vs Normal topics
+
+## 📁 Dataset Information
+
+The project includes a sample dataset (`Datasets.csv`) for training and prediction. The dataset contains:
+- **Description:** Text descriptions of various topics
+- **Label:** Binary classification (0 = Normal Topic, 1 = Hot Topic)
+
+### Dataset Structure
+```csv
+Description,Label
+"Breaking news: Major earthquake strikes...",1
+"Local bakery opens new branch...",0
+```
+
+**Note:** The provided dataset is a sample. For production use, you should:
+1. Expand the dataset with more diverse examples
+2. Ensure balanced representation of both classes
+3. Include domain-specific topics relevant to your use case
+
+### Using Your Own Dataset
+To use your own dataset:
+1. Create a CSV file named `Datasets.csv` in the root directory
+2. Ensure it has two columns: `Description` and `Label`
+3. Label format: 0 = Normal Topic, 1 = Hot Topic
+4. Save with UTF-8 or Latin-1 encoding
 
 ## 📈 Machine Learning Models
 
@@ -136,6 +179,74 @@ The main settings are in `identifying_hot_topic_trends/settings.py`:
 - `DATABASES` - SQLite3 configuration
 - `STATIC_URL` - Static files URL
 - `TEMPLATES` - Template directories
+
+## 🐛 Troubleshooting
+
+### Common Issues and Solutions
+
+#### Issue: "Couldn't import Django"
+**Solution:**
+```bash
+# Ensure Django is installed
+pip install Django>=6.0
+
+# Or reinstall all requirements
+pip install -r requirements.txt
+```
+
+#### Issue: "No module named 'sklearn'"
+**Solution:**
+```bash
+pip install scikit-learn>=1.0
+```
+
+#### Issue: "FileNotFoundError: Datasets.csv"
+**Solution:**
+- Ensure `Datasets.csv` exists in the root directory
+- The repository includes a sample dataset
+- If missing, create one following the dataset structure above
+
+#### Issue: Database errors after pulling updates
+**Solution:**
+```bash
+# Delete the database and reinitialize
+rm db.sqlite3
+python manage.py migrate
+```
+
+#### Issue: Port 8000 already in use
+**Solution:**
+```bash
+# Use a different port
+python manage.py runserver 8080
+
+# Or find and kill the process using port 8000 (Unix/Linux)
+lsof -ti:8000 | xargs kill -9
+
+# Windows
+netstat -ano | findstr :8000
+taskkill /PID <PID_NUMBER> /F
+```
+
+#### Issue: Static files not loading
+**Solution:**
+```bash
+# Collect static files
+python manage.py collectstatic --noinput
+```
+
+#### Issue: START_SERVER.bat requires admin privileges (Windows)
+**Solution:**
+- Run the batch file as administrator, or
+- Use `python manage.py runserver` instead
+
+### Getting Help
+
+If you encounter issues not listed here:
+1. Check the Django error message in the console
+2. Ensure all dependencies are installed: `pip list`
+3. Verify Python version: `python --version` (should be 3.10+)
+4. Check if migrations are applied: `python manage.py showmigrations`
 
 ## 📝 License
 

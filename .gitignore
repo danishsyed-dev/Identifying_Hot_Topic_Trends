@@ -146,5 +146,5 @@ logs/
 # Project specific sensitive folders/files
 Database/
 Datastructure.txt
-Datasets.csv
+# Keep sample Datasets.csv in repo, but ignore generated Labeled_Data.csv
 Labeled_Data.csv
