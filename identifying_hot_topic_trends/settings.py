@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'identifying_hot_topic_trends.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -120,9 +120,11 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'Template/images')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Template/media')
 
-STATIC_ROOT = '/static/'
-
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Admin credentials (override via environment variables in production)
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'Admin')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'Admin')

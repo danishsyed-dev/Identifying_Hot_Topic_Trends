@@ -25,7 +25,7 @@ This project implements a system for analyzing text data and predicting whether 
 
 - **Backend:** Django 6.0, Python 3.10+
 - **Database:** SQLite3
-- **ML Libraries:** Scikit-learn, Gensim (Word2Vec)
+- **ML Libraries:** Scikit-learn, Gensim (Word2Vec), Joblib (model persistence)
 - **Frontend:** HTML, CSS, Bootstrap
 - **Charts:** CanvasJS
 
@@ -33,21 +33,22 @@ This project implements a system for analyzing text data and predicting whether 
 
 ```
 .
-├── identifying_hot_topic_trends/    # Django settings
-│   ├── settings.py                  # Main configuration file
+├── identifying_hot_topic_trends/    # Django project settings
+│   ├── settings.py                  # Main configuration (DB, static, admin creds)
 │   ├── urls.py                      # URL routing
 │   └── wsgi.py                      # WSGI configuration
-├── Remote_User/                     # User app
-│   ├── models.py                    # Database models
-│   ├── views.py                     # User views and prediction logic
+├── Remote_User/                     # User-facing app
+│   ├── models.py                    # User, prediction, accuracy models
+│   ├── views.py                     # Login, registration, prediction (loads pre-trained models)
 │   └── migrations/                  # Database migrations
 ├── Service_Provider/                # Admin app
-│   ├── models.py                    # Admin models
-│   ├── views.py                     # Admin views and ML training
+│   ├── views.py                     # ML training, analytics, data export
 │   └── migrations/                  # Database migrations
 ├── Template/
-│   ├── htmls/                       # HTML templates
-│   └── images/                      # Static files
+│   ├── htmls/RUser/                 # Remote user templates
+│   ├── htmls/SProvider/             # Service provider templates
+│   └── images/                      # Static image assets
+├── trained_models/                  # Auto-generated: persisted ML models (git-ignored)
 ├── Datasets.csv                     # Sample training dataset (98 examples)
 ├── manage.py                        # Django entry point
 ├── setup_check.py                   # Setup validation script
@@ -135,8 +136,9 @@ Open your browser and navigate to: **`http://127.0.0.1:8000/`**
 
 ### Remote User
 - **Registration Required:** Create an account to access user features
+- Passwords are securely hashed using Django's PBKDF2 algorithm
 - Features:
-  - Register and login
+  - Register and login (duplicate usernames are prevented)
   - Predict hot topic trends by entering text data
   - View profile
 
@@ -144,21 +146,26 @@ Open your browser and navigate to: **`http://127.0.0.1:8000/`**
 - **Default Login Credentials:**
   - Username: `Admin`
   - Password: `Admin`
+- Admin credentials can be overridden via environment variables:
+  ```bash
+  set ADMIN_USERNAME=YourUsername
+  set ADMIN_PASSWORD=YourSecurePassword
+  ```
 - Features:
-  - Train and test ML models
+  - Train and test ML models (models are persisted for fast predictions)
   - View accuracy charts (Bar, Line)
   - View all predictions and ratios
-  - Download predicted datasets
+  - Download predicted datasets as Excel
   - Manage remote users
 
 ## 📊 Features
 
-1. **User Registration & Authentication**
-2. **Hot Topic Prediction** - Enter headline, description, and source to predict
-3. **ML Model Training** - Train multiple classifiers on the dataset
-4. **Accuracy Visualization** - View model performance in charts
-5. **Data Export** - Download predictions as Excel files
-6. **Prediction Analytics** - View ratio of Hot vs Normal topics
+1. **User Registration & Authentication** — Secure password hashing (PBKDF2), session-based auth
+2. **Hot Topic Prediction** — Enter headline, description, and source to predict (uses pre-trained models)
+3. **ML Model Training** — Train 5 classifiers + ensemble VotingClassifier, persisted via Joblib
+4. **Accuracy Visualization** — View model performance in bar/line charts
+5. **Data Export** — Download predictions as Excel files
+6. **Prediction Analytics** — View ratio of Hot vs Normal topics
 
 ## 📁 Dataset Information
 
@@ -199,10 +206,14 @@ To use your own dataset:
 
 The main settings are in `identifying_hot_topic_trends/settings.py`:
 
-- `DEBUG = True` (Set to `False` in production)
-- `DATABASES` - SQLite3 configuration
-- `STATIC_URL` - Static files URL
-- `TEMPLATES` - Template directories
+| Setting | Default | Notes |
+|---------|---------|-------|
+| `DEBUG` | `True` | Set to `False` in production |
+| `SECRET_KEY` | Dev fallback | Override via `DJANGO_SECRET_KEY` env var |
+| `ADMIN_USERNAME` | `Admin` | Override via `ADMIN_USERNAME` env var |
+| `ADMIN_PASSWORD` | `Admin` | Override via `ADMIN_PASSWORD` env var |
+| `DATABASES` | SQLite3 | Uses absolute path via `BASE_DIR` |
+| `STATIC_ROOT` | `staticfiles/` | For `collectstatic` in production |
 
 ## 🐛 Troubleshooting
 

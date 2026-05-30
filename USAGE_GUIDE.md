@@ -31,9 +31,11 @@ The Admin panel provides access to ML model training, analytics, and user manage
 
 ### 1. Login
 - Navigate to: http://127.0.0.1:8000/
-- Click on "Service Provider" or "Admin" login
+- Click on **"SERVICE PROVIDER"** button
 - **Username:** `Admin`
 - **Password:** `Admin`
+
+> **Note:** Admin credentials can be overridden via environment variables `ADMIN_USERNAME` and `ADMIN_PASSWORD`.
 
 ### 2. Train Machine Learning Models
 
@@ -41,19 +43,22 @@ The Admin panel provides access to ML model training, analytics, and user manage
 Before making predictions, the system needs to learn from the dataset.
 
 **Steps:**
-1. From the admin dashboard, click **"Train Model"**
+1. From the admin dashboard, click **"Train & Test Data Sets"**
 2. The system will train 5 different ML algorithms:
    - Naive Bayes
    - Support Vector Machine (SVM)
    - Logistic Regression
    - Decision Tree Classifier
    - Gradient Boosting Classifier
-3. Wait for training to complete (usually takes 10-30 seconds)
-4. You'll see accuracy scores for each model
+3. An ensemble **VotingClassifier** combining all 5 models is also created
+4. Wait for training to complete (usually takes 10-30 seconds)
+5. You'll see accuracy scores for each model
+6. The trained models are **saved to disk** (`trained_models/` folder) so prediction is instant
 
 **Expected Results:**
 - Models typically achieve 85-95% accuracy on the sample dataset
 - Each algorithm shows its classification accuracy
+- **You only need to train once** — models persist until you retrain
 
 ### 3. View Model Performance
 
@@ -97,18 +102,17 @@ Remote users can register, login, and make predictions about whether topics are 
 ### 1. Register an Account
 
 **First-time users must register:**
-1. Click **"Remote User"** from the homepage
-2. Click **"Register"**
-3. Fill in the registration form:
-   - Username
+1. Click **"REGISTER"** from the homepage
+2. Fill in the registration form:
+   - Username (must be unique)
    - Email
-   - Password
+   - Password (stored securely with hashing)
    - Phone Number
    - Country
    - State
    - City
-4. Click **"Register"**
-5. You'll be redirected to the login page
+3. Click **"Register"**
+4. You'll see a success message — go back to the login page
 
 ### 2. Login
 1. Enter your registered username and password
@@ -127,8 +131,10 @@ Remote users can register, login, and make predictions about whether topics are 
    - **Description:** Detailed description (this is what the ML model analyzes)
    - **Source:** Where the topic came from (e.g., "Twitter", "News")
 3. Click **"Predict"**
-4. Wait a few seconds for the ML models to analyze
+4. The result appears **instantly** (loads pre-trained models from disk)
 5. See the result: **"Hot Topic"** or **"Normal Topic"**
+
+> **Important:** The admin must train models at least once before predictions work. If models aren't trained, you'll see an error message.
 
 **Example Input:**
 - **Headline:** Breaking Economic News
@@ -220,19 +226,20 @@ When viewing model performance:
 4. **Monitor prediction ratios** to understand trend patterns
 
 ### For Remote Users
-1. **Provide meaningful descriptions** - The ML model analyzes the description field
-2. **Test with known examples** - Try obvious hot topics and normal topics to understand the system
-3. **Be patient** - Prediction takes 5-10 seconds as multiple models analyze the text
+1. **Provide meaningful descriptions** — The ML model analyzes the description field
+2. **Test with known examples** — Try obvious hot topics and normal topics to understand the system
+3. **Results are instant** — Models are loaded from disk, no retraining needed
 
 ## Troubleshooting
 
 ### "Models not trained" error
 - Admin must train models first
-- Go to Admin panel → Train Model
+- Go to Admin panel → Train & Test Data Sets
+- Models are saved to `trained_models/` and persist across server restarts
 
 ### Prediction takes too long
-- Normal for first prediction (models loading)
-- Should be faster on subsequent predictions
+- First prediction may take slightly longer (loading models from disk)
+- Subsequent predictions should be near-instant
 - Check server logs for errors
 
 ### Low accuracy scores
