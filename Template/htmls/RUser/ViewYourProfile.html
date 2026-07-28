@@ -1,97 +1,49 @@
 {% extends 'RUser/design.html' %}
 {% block userblock %}
+<div class="profile-card">
+  <div class="card">
+    <div class="card-header">
+      <h3>Your Profile Details</h3>
+    </div>
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="profile-detail-item">
+          <span class="profile-label">User Name</span>
+          <span class="profile-value">{{object.username}}</span>
+        </div>
 
-<link rel="icon" href="images/icon.png" type="image/x-icon" />
+        <div class="profile-detail-item">
+          <span class="profile-label">Email</span>
+          <span class="profile-value">{{object.email}}</span>
+        </div>
 
-<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
+        <div class="profile-detail-item">
+          <span class="profile-label">Password</span>
+          <span class="profile-value">{{object.password}}</span>
+        </div>
 
+        <div class="profile-detail-item">
+          <span class="profile-label">Mobile No</span>
+          <span class="profile-value">{{object.phoneno}}</span>
+        </div>
 
+        <div class="profile-detail-item">
+          <span class="profile-label">Country</span>
+          <span class="profile-value">{{object.country}}</span>
+        </div>
 
-<style>
-	body {
-		background-color: #000000;
-	}
+        <div class="profile-detail-item">
+          <span class="profile-label">State</span>
+          <span class="profile-value">{{object.state}}</span>
+        </div>
 
-	.container-fluid {
-		padding: 50px;
-	}
-
-	.container {
-		background-color: white;
-		padding: 50px;
-	}
-
-	#title {
-		font-family: 'Fredoka One', cursive;
-	}
-
-	.text-uppercase {
-		font-family: 'Righteous', cursive;
-
-	}
-
-	.style1 {
-		color: #FF0000;
-		font-weight: bold;
-	}
-</style>
-
-<body>
-	<div class="container-fluid">
-		<div class="container">
-
-			<div class="row">
-				<div class="col-md-5">
-					<form role="form" method="POST">
-						{% csrf_token %}
-						<fieldset>
-							<p class="text-uppercase pull-center style1">YOUR PROFILE DETAILS !!! </p>
-							<hr>
-							<div class="form-group">
-								<P><span class="style1">USER NAME</span> = {{object.username}}</P>
-							</div>
-
-							<div class="form-group">
-								<P><span class="style1">EMAIL</span> = {{object.email}}</P>
-							</div>
-
-							<div class="form-group">
-								<P><span class="style1">PASSWORD</span> = {{object.password}}</P>
-							</div>
-
-							<div class="form-group">
-								<p><span class="style1">MOBILE NO</span> = {{object.phoneno}}</p>
-
-							</div>
-
-							<div class="form-group">
-								<p><span class="style1">COUNTRY</span> = {{object.country}}</p>
-
-							</div>
-
-							<div class="form-group">
-								<p><span class="style1">STATE</span> = {{object.state}}</p>
-
-							</div>
-
-							<div class="form-group">
-								<p><span class="style1">CITY</span> = {{object.city}}</p>
-
-							</div>
-
-
-
-
-						</fieldset>
-					</form>
-				</div>
-
-				<div class="col-md-2">
-					<!-------null------>
-				</div>
-			</div>
-		</div>
-	</div>
-	{% endblock %}
+        <div class="profile-detail-item">
+          <span class="profile-label">City</span>
+          <span class="profile-value">{{object.city}}</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
