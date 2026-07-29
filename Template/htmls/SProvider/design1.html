@@ -15,19 +15,21 @@
     <nav class="navbar">
       <a href="{% url 'train_model' %}" class="nav-brand">
         <span class="brand-icon">SP</span>
-        Identifying Hot Topic Trends
+        <span class="brand-title">Hot Topic Admin</span>
       </a>
       <ul class="nav-menu">
-        <li><a href="{% url 'train_model' %}" class="nav-link">Train & Test Data Sets</a></li>
-        <li><a href="{% url 'likeschart' 'bar' %}" class="nav-link">Accuracy Bar Chart</a></li>
-        <li><a href="{% url 'charts1' 'line' %}" class="nav-link">Accuracy Results</a></li>
-        <li><a href="{% url 'View_Predicted_Identifying_Hot_Topic_Trends' %}" class="nav-link">View Predicted Trends</a></li>
-        <li><a href="{% url 'View_Predicted_Identifying_Hot_Topic_Trends_Ratio' %}" class="nav-link">View Trends Ratio</a></li>
-        <li><a href="{% url 'Download_Trained_DataSets' %}" class="nav-link">Download Data Sets</a></li>
-        <li><a href="{% url 'charts' 'line' %}" class="nav-link">Trends Ratio Chart</a></li>
-        <li><a href="{% url 'View_Remote_Users' %}" class="nav-link">View All Users</a></li>
-        <li><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
+        <li><a href="{% url 'train_model' %}" class="nav-link">Train Models</a></li>
+        <li><a href="{% url 'likeschart' 'bar' %}" class="nav-link">Accuracy Bar</a></li>
+        <li><a href="{% url 'charts1' 'line' %}" class="nav-link">Accuracy Line</a></li>
+        <li><a href="{% url 'View_Predicted_Identifying_Hot_Topic_Trends' %}" class="nav-link">Predictions</a></li>
+        <li><a href="{% url 'View_Predicted_Identifying_Hot_Topic_Trends_Ratio' %}" class="nav-link">Trends Ratio</a></li>
+        <li><a href="{% url 'charts' 'line' %}" class="nav-link">Ratio Chart</a></li>
+        <li><a href="{% url 'View_Remote_Users' %}" class="nav-link">Remote Users</a></li>
+        <li><a href="{% url 'Download_Trained_DataSets' %}" class="nav-link btn-export">Export Data</a></li>
       </ul>
+      <div class="nav-actions">
+        <a href="{% url 'login' %}" class="btn btn-sm btn-outline-danger">Logout</a>
+      </div>
     </nav>
   </header>
 

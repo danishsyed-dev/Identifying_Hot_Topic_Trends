@@ -1,39 +1,50 @@
 {% extends 'SProvider/design1.html' %}
 {% block researchblock %}
 
-<div class="page-header text-center">
-  <h2>View All Remote Users</h2>
-  <p class="subtitle">Registered User Information</p>
+<div class="page-header flex-between">
+  <div>
+    <h2>Registered Remote Users</h2>
+    <p class="subtitle">Inspect registered user accounts across the platform</p>
+  </div>
 </div>
 
 <div class="card">
-  <div class="card-body">
-    <div class="table-wrapper">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>User Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>Country</th>
-            <th>State</th>
-            <th>City</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for o in objects %}
-          <tr>
-            <td>{{ o.username }}</td>
-            <td>{{ o.email }}</td>
-            <td>{{ o.phoneno }}</td>
-            <td>{{ o.country }}</td>
-            <td>{{ o.state }}</td>
-            <td>{{ o.city }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+  <div class="card-header">
+    <h3>User Directory</h3>
+    <span class="badge badge-normal">Total Registered Users: {{ objects|length }}</span>
+  </div>
+  <div class="table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>User Name</th>
+          <th>Email Address</th>
+          <th>Mobile Number</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in objects %}
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="user-avatar">{{ o.username|slice:":1"|upper }}</div>
+              <span class="user-name">{{ o.username }}</span>
+            </div>
+          </td>
+          <td><span class="text-mono">{{ o.email }}</span></td>
+          <td>{{ o.phoneno }}</td>
+          <td>
+            <span class="location-tag">{{ o.city }}, {{ o.state }}, {{ o.country }}</span>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4" class="text-center text-muted py-4">No registered users found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 
