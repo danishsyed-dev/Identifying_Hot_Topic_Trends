@@ -8,14 +8,14 @@
 
 {% if form %}
 <div class="chart-card">
-  <div id="chartContainer" class="chart-wrapper" style="height: 400px; width: 100%;"></div>
+  <div id="chartContainer" class="chart-wrapper"></div>
 </div>
 
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 <script>
 function renderChart() {
   if (typeof CanvasJS === 'undefined') {
-    setTimeout(renderChart, 150);
+    setTimeout(renderChart, 100);
     return;
   }
   var chart = new CanvasJS.Chart("chartContainer", {
@@ -51,7 +51,7 @@ function renderChart() {
 }
 
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  setTimeout(renderChart, 100);
+  renderChart();
 } else {
   document.addEventListener('DOMContentLoaded', renderChart);
   window.addEventListener('load', renderChart);

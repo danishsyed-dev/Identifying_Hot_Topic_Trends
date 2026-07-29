@@ -602,15 +602,8 @@ textarea.form-control {
 .chart-wrapper {
   position: relative;
   width: 100%;
-  min-height: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.chart-wrapper canvas {
-  max-width: 100% !important;
-  height: auto !important;
+  height: 420px;
+  display: block;
 }
 
 /* --------------------------------------------------------------------------
