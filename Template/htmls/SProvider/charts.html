@@ -6,34 +6,65 @@
   <p class="subtitle">Sequential Evolution & Topic Distribution Analysis</p>
 </div>
 
+{% if form %}
 <div class="chart-card">
   <div id="chartContainer" class="chart-wrapper" style="height: 400px; width: 100%;"></div>
 </div>
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-     window.onload = function () {
+function renderChart() {
+  if (typeof CanvasJS === 'undefined') {
+    setTimeout(renderChart, 150);
+    return;
+  }
+  var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+    theme: "dark2",
+    backgroundColor: "#1e293b",
+    title: { text: "" },
+    axisX: {
+      labelFontColor: "#cbd5e1",
+      lineColor: "#334155",
+      labelFontSize: 13
+    },
+    axisY: {
+      labelFontColor: "#cbd5e1",
+      gridColor: "#334155",
+      suffix: "%",
+      labelFontSize: 13
+    },
+    data: [{
+      type: "line",
+      color: "#10b981",
+      yValueFormatString: "##0.00'%'",
+      indexLabel: "{label}: {y}%",
+      indexLabelFontColor: "#f8fafc",
+      dataPoints: [
+        {% for o in form %}
+        { y: {{ o.dcount }}, label: "{{ o.names }}" },
+        {% endfor %}
+      ]
+    }]
+  });
+  chart.render();
+}
 
-          var chart = new CanvasJS.Chart("chartContainer", {
-               animationEnabled: true,
-               title: {
-                    text: ""
-               },
-               data: [{
-                    type: "line",
-                    startAngle: 240,
-                    yValueFormatString: "##0.00\"%\"",
-                    indexLabel: "{label} {y}",
-                    dataPoints: [
-                         {% for o in form %}
-			{ y: {{ o.dcount }}, label: "{{o.names}}"},
-          {% endfor %}
-		]
-	}]
-});
-     chart.render();
-
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(renderChart, 100);
+} else {
+  document.addEventListener('DOMContentLoaded', renderChart);
+  window.addEventListener('load', renderChart);
 }
 </script>
+{% else %}
+<div class="card text-center" style="padding: 3rem 1.5rem;">
+  <div class="card-body">
+    <h3 style="color: #cbd5e1; margin-bottom: 0.5rem;">No Trend Ratio Data Available</h3>
+    <p class="subtitle">Perform topic predictions or visit the Trends Ratio page to populate ratio analytics.</p>
+    <a href="{% url 'View_Predicted_Identifying_Hot_Topic_Trends_Ratio' %}" class="btn btn-primary" style="margin-top: 1rem;">View Trends Ratio</a>
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}
